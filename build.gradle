@@ -26,3 +26,9 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    compileSdkVersion = 29
+    moshiKotlinVersion = '1.8.0'
+    dagger2Version = '2.13'
+}
