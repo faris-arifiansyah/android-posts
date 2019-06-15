@@ -31,4 +31,5 @@ ext {
     compileSdkVersion = 29
     moshiKotlinVersion = '1.8.0'
     dagger2Version = '2.15'
+    archVersion = "1.0.0"
 }
