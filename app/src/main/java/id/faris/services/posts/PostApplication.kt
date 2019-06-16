@@ -7,6 +7,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import id.faris.services.posts.di.component.DaggerAppComponent
 import id.faris.services.posts.di.modules.AppModule
+import id.faris.services.posts.di.modules.NetModule
 import javax.inject.Inject
 
 class PostApplication: Application(), HasActivityInjector {
@@ -16,10 +17,11 @@ class PostApplication: Application(), HasActivityInjector {
     override fun onCreate() {
         super.onCreate()
 
-        DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
+        DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            .netModule(NetModule(BuildConfig.URL))
+            .build().inject(this)
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun activityInjector(): AndroidInjector<Activity> = activityInjector
 }

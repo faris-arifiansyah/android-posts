@@ -18,7 +18,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', 'URL', '"https://my-json-server.typicode.com/typicode/demo/"'
+        }
         release {
+            buildConfigField 'String', 'URL', '"https://my-json-server.typicode.com/typicode/demo/"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -47,11 +51,15 @@ dependencies {
 
     //Room
     implementation "android.arch.persistence.room:runtime:${rootProject.ext.archRoomVersion}"
+    implementation "android.arch.persistence.room:rxjava2:${rootProject.ext.archRoomVersion}"
     kapt "android.arch.persistence.room:compiler:${rootProject.ext.archRoomVersion}"
 
     //Lifecycle
     implementation "android.arch.lifecycle:extensions:${rootProject.ext.archLifecycleVersion}"
     kapt "android.arch.lifecycle:compiler:${rootProject.ext.archLifecycleVersion}"
+
+    //RxJava 2 LiveData
+    implementation "android.arch.lifecycle:reactivestreams:${rootProject.ext.archLifecycleVersion}"
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
@@ -66,4 +74,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha01'
 }

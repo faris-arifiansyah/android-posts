@@ -1,20 +1,25 @@
-package id.faris.services.posts.dao
+package id.faris.services.posts.data.source.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import id.faris.services.posts.model.Post
+import id.faris.services.posts.data.Post
+import io.reactivex.Single
 
 @Dao
 interface PostsDao {
 
     @Query("SELECT * FROM posts")
-    fun queryPosts(): LiveData<List<Post>>
+    fun queryPosts(): Single<List<Post>>
 
     @Insert(
         onConflict = OnConflictStrategy.REPLACE
     )
     fun insertPost(post: Post)
+
+    @Insert(
+        onConflict = OnConflictStrategy.REPLACE
+    )
+    fun insertAllPosts(posts: List<Post>)
 }

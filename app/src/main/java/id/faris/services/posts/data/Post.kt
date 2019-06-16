@@ -1,4 +1,4 @@
-package id.faris.services.posts.model
+package id.faris.services.posts.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
