@@ -10,8 +10,8 @@ import io.reactivex.Single
 @Dao
 interface PostsDao {
 
-    @Query("SELECT * FROM posts")
-    fun queryPosts(): Single<List<Post>>
+    @Query("SELECT * FROM posts ORDER BY id limit :limit offset :offset")
+    fun queryPosts(limit:Int, offset:Int): Single<List<Post>>
 
     @Insert(
         onConflict = OnConflictStrategy.REPLACE

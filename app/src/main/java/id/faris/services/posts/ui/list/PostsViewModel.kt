@@ -17,17 +17,22 @@ class PostsViewModel @Inject constructor(
 
     var postsResult: MutableLiveData<List<Post>> = MutableLiveData()
     var postsError: MutableLiveData<String> = MutableLiveData()
+    var postsLoader: MutableLiveData<Boolean> = MutableLiveData()
     lateinit var disposableObserver: DisposableObserver<List<Post>>
 
     fun postsResult(): LiveData<List<Post>> {
         return postsResult
     }
 
+    fun postsLoader(): LiveData<Boolean> {
+        return postsLoader
+    }
+
     fun postsError(): LiveData<String> {
         return postsError
     }
 
-    fun loadPosts() {
+    fun loadPosts(limit:Int, offset:Int) {
 
         disposableObserver = object : DisposableObserver<List<Post>>() {
             override fun onComplete() {
@@ -36,14 +41,16 @@ class PostsViewModel @Inject constructor(
 
             override fun onNext(posts: List<Post>) {
                 postsResult.postValue(posts)
+                postsLoader.postValue(false)
             }
 
             override fun onError(e: Throwable) {
                 postsError.postValue(e.message)
+                postsLoader.postValue(false)
             }
         }
 
-        postRepository.getPosts()
+        postRepository.getPosts(limit, offset)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .debounce(400, MILLISECONDS)
